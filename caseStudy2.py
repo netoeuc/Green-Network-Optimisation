@@ -1,5 +1,6 @@
 from shortestPath import *
 from networkFillStandby import *
+from greenerNetwork import *
 
 
 
@@ -25,59 +26,59 @@ for i in range(37):
 
 ##### Edges
 
-G.add_edge(0, 1, capacity=1024)
-G.add_edge(0, 8,  capacity=100)
-G.add_edge(0, 15, capacity=100)
-G.add_edge(0, 22,  capacity=100)
-G.add_edge(0, 29, capacity=100)
+G.add_edge(0, 1, capacity=1024, flow = 0)
+G.add_edge(0, 8,  capacity=100, flow = 0)
+G.add_edge(0, 15, capacity=100, flow = 0)
+G.add_edge(0, 22,  capacity=100, flow = 0)
+G.add_edge(0, 29, capacity=100, flow = 0)
 
-G.add_edge(1,  2,   capacity=100)
-G.add_edge(8,  9,   capacity=100)
-G.add_edge(15, 16,  capacity=100)
-G.add_edge(22, 23, capacity=1024)
-G.add_edge(29, 30,  capacity=100)
-
-
-G.add_edge(2,   3,  capacity=100)
-G.add_edge(9,  10,  capacity=100)
-G.add_edge(16, 17,  capacity=100)
-G.add_edge(23, 24, capacity=1024)
-G.add_edge(30, 31,  capacity=100)
-
-G.add_edge(3,   4,  capacity=100)
-G.add_edge(10, 11,  capacity=100)
-G.add_edge(17, 18,  capacity=100)
-G.add_edge(24, 25, capacity=1024)
-G.add_edge(31, 32,  capacity=100)
-
-G.add_edge(4,   5,  capacity=100)
-G.add_edge(11, 12,  capacity=100)
-G.add_edge(18, 19,  capacity=100)
-G.add_edge(25, 26, capacity=1024)
-G.add_edge(32, 33,  capacity=100)
+G.add_edge(1,  2,   capacity=100, flow = 0)
+G.add_edge(8,  9,   capacity=100, flow = 0)
+G.add_edge(15, 16,  capacity=100, flow = 0)
+G.add_edge(22, 23, capacity=1024, flow = 0)
+G.add_edge(29, 30,  capacity=100, flow = 0)
 
 
+G.add_edge(2,   3,  capacity=100, flow = 0)
+G.add_edge(9,  10,  capacity=100, flow = 0)
+G.add_edge(16, 17,  capacity=100, flow = 0)
+G.add_edge(23, 24, capacity=1024, flow = 0)
+G.add_edge(30, 31,  capacity=100, flow = 0)
 
-G.add_edge(5,   6,  capacity=100)
-G.add_edge(12, 13,  capacity=100)
-G.add_edge(19, 20,  capacity=100)
-G.add_edge(26, 27, capacity=1024)
-G.add_edge(33, 34,  capacity=100)
+G.add_edge(3,   4,  capacity=100, flow = 0)
+G.add_edge(10, 11,  capacity=100, flow = 0)
+G.add_edge(17, 18,  capacity=100, flow = 0)
+G.add_edge(24, 25, capacity=1024, flow = 0)
+G.add_edge(31, 32,  capacity=100, flow = 0)
+
+G.add_edge(4,   5,  capacity=100, flow = 0)
+G.add_edge(11, 12,  capacity=100, flow = 0)
+G.add_edge(18, 19,  capacity=100, flow = 0)
+G.add_edge(25, 26, capacity=1024, flow = 0)
+G.add_edge(32, 33,  capacity=100, flow = 0)
 
 
 
-G.add_edge(6,   7,  capacity=100)
-G.add_edge(13, 14,  capacity=100)
-G.add_edge(20, 21,  capacity=100)
-G.add_edge(27, 28, capacity=1024)
-G.add_edge(34, 35,  capacity=100)
+G.add_edge(5,   6,  capacity=100, flow = 0)
+G.add_edge(12, 13,  capacity=100, flow = 0)
+G.add_edge(19, 20,  capacity=100, flow = 0)
+G.add_edge(26, 27, capacity=1024, flow = 0)
+G.add_edge(33, 34,  capacity=100, flow = 0)
 
 
-G.add_edge(7,  36,  capacity=100)
-G.add_edge(14, 36,  capacity=100)
-G.add_edge(21, 36,  capacity=100)
-G.add_edge(28, 36, capacity=1024)
-G.add_edge(35, 36,  capacity=100)
+
+G.add_edge(6,   7,  capacity=100, flow = 0)
+G.add_edge(13, 14,  capacity=100, flow = 0)
+G.add_edge(20, 21,  capacity=100, flow = 0)
+G.add_edge(27, 28, capacity=1024, flow = 0)
+G.add_edge(34, 35,  capacity=100, flow = 0)
+
+
+G.add_edge(7,  36,  capacity=100, flow = 0)
+G.add_edge(14, 36,  capacity=100, flow = 0)
+G.add_edge(21, 36,  capacity=100, flow = 0)
+G.add_edge(28, 36, capacity=1024, flow = 0)
+G.add_edge(35, 36,  capacity=100, flow = 0)
 
 
 # print (G.node[0]['energyConsumption'])
@@ -86,19 +87,17 @@ flow_value = nx.maximum_flow_value(G, 0, 36)
 smallest = all_shortest_paths(G, 0, 36, "energyConsumption");
 # print([p for p in smallest])
 
-print (sort_path_by_energyConsumption(G, 0, 36))
-print (G.node[0])
 print("------")
 print(get_network_statistics(G))
 print("------")
-# print (sort_path_by_energyConsumption_values(G, 0, 36))
-# print (sort_path_by_renewableEnergyUsage(G, 0, 36))
-# print (sort_path_by_renewableEnergyUsage_values(G, 0, 36))
-# print (sort_path_by_wattPerMb(G, 0, 36))
-# print (sort_path_by_wattPerMb_values(G, 0, 36))
+print(adaptNetwork("energyConsumption", G, 0, 36, 100))
+print(G.node[30])
 
-# nx.draw(G)
-nx.draw_random(G)
+
+
+
+
+# nx.draw_random(G)
 # nx.draw_circular(G)
 # nx.draw_spectral(G)
-plt.show()
+# plt.show()
