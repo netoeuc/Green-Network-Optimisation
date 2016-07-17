@@ -82,17 +82,17 @@ G.add_edge(35, 36,  capacity=100, flow = 0)
 
 
 # print (G.node[0]['energyConsumption'])
-flow_value = nx.maximum_flow_value(G, 0, 36)
+# flow_value = nx.maximum_flow_value(G, 0, 36)
 # print(flow_value)
-smallest = all_shortest_paths(G, 0, 36, "energyConsumption");
+# smallest = all_shortest_paths(G, 0, 36, "energyConsumption");
 # print([p for p in smallest])
-
-print("------")
-print(get_network_statistics(G))
-print("------")
-print(adaptNetwork("energyConsumption", G, 0, 36, 100))
-print(G.node[30])
-
+# 
+# print("------")
+# print(get_network_statistics(G))
+# print("------")
+# print(adaptNetwork("energyConsumption", G, 0, 36, 100))
+# print(G.node[30])
+print(simulate(G, "energyConsumption", 0, 36,2400))
 
 
 

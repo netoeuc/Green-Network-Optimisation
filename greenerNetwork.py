@@ -8,6 +8,54 @@ import matplotlib.pyplot as plt
 import copy
 
 
+
+def simulate(G, metric, source, target,
+			hours,
+			flowPattern = { 0:0,
+							1:0,
+							2:0,
+							3:0,
+							4:0,
+							5:0,
+							6:0,
+							7:0,
+							8:0,
+							9:0,
+							10:0,
+							11:0,
+							12:0,
+							13:0,
+							14:0,
+							15:0,
+							16:0,
+							17:0,
+							18:0,
+							19:0,
+							20:0,
+							21:0,
+							22:0,
+							23:0}, variance = 0):
+			result = {'energyConsumption': 0, 'renewableEnergyUsage': 0, 'meanWattPerMb': 0}
+			if (hours>=1):
+				dailyHour = 0;
+				for i in range(int(hours)):
+					currentStatistics = adaptNetwork(metric, G, source, target, flowPattern[dailyHour])
+					
+					result["energyConsumption"]+=currentStatistics["energyConsumption"]
+					result["renewableEnergyUsage"]+=currentStatistics["renewableEnergyUsage"] 
+					result["meanWattPerMb"]+=currentStatistics["meanWattPerMb"] 
+					if (dailyHour<23):
+						dailyHour+=1
+					else:
+						dailyHour = 0;
+				result["meanWattPerMb"]=result["meanWattPerMb"]//int(hours)
+			
+			return result
+
+
+
+
+
 def adaptNetwork(metric, G, source, target, flow, variance=0):
 	nodesToBeTurnedOff = standbyActivation(metric, G, source, target, flow, variance)
 	G = turnNodesOff(G, nodesToBeTurnedOff)
