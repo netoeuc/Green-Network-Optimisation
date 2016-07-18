@@ -1,5 +1,3 @@
-from greenerNetwork import *
-
 
 
 def sort_path_by_energyConsumption(G, source, target):

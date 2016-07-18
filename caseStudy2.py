@@ -92,7 +92,7 @@ G.add_edge(35, 36,  capacity=100, flow = 0)
 # print("------")
 # print(adaptNetwork("energyConsumption", G, 0, 36, 100))
 # print(G.node[30])
-print(simulate(G, "energyConsumption", 0, 36,2400))
+print(simulate(G, "renewableEnergyUsage", 0, 36,2400))
 
 
 

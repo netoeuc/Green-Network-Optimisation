@@ -11,7 +11,7 @@ import copy
 
 def simulate(G, metric, source, target,
 			hours,
-			flowPattern = { 0:0,
+			flowPattern = { 0:200,
 							1:0,
 							2:0,
 							3:0,
@@ -37,7 +37,7 @@ def simulate(G, metric, source, target,
 							23:0}, variance = 0):
 			result = {'energyConsumption': 0, 'renewableEnergyUsage': 0, 'meanWattPerMb': 0}
 			if (hours>=1):
-				dailyHour = 0;
+				dailyHour = 0
 				for i in range(int(hours)):
 					currentStatistics = adaptNetwork(metric, G, source, target, flowPattern[dailyHour])
 					
@@ -47,7 +47,7 @@ def simulate(G, metric, source, target,
 					if (dailyHour<23):
 						dailyHour+=1
 					else:
-						dailyHour = 0;
+						dailyHour = 0
 				result["meanWattPerMb"]=result["meanWattPerMb"]//int(hours)
 			
 			return result
@@ -125,6 +125,7 @@ def standbyActivation(metric, G, source, target, flow, variance=0):
 
 		elif (metric=="renewableEnergyUsage"):
 			list = sort_path_by_renewableEnergyUsage(G, source, target)
+			print list
 			remainingFlow = flow+variance;
 			currentPath = 0;
 			turnedOnDevices = []
@@ -141,7 +142,9 @@ def standbyActivation(metric, G, source, target, flow, variance=0):
 			while(currentPath<len(list)):
 				result+=list[currentPath]
 				currentPath+=1;
+			print result
 			result = [x for x in result if x not in turnedOnDevices]
+
 			return result
 
 
@@ -169,7 +172,7 @@ def standbyActivation(metric, G, source, target, flow, variance=0):
 
 
 def sort_path_by_energyConsumption(G, source, target):
-	list,list_values, temp_result = [p for p in all_shortest_paths(G, source, target, "energyConsumption")],[], 0; 
+	list,list_values, temp_result = [p for p in all_simple_paths(G, source, target, "energyConsumption")],[], 0;
 	for i in range(len(list)):
 		for j in range(len(list[i])):
 			temp_result+=G.node[list[i][j]]['energyConsumption']
@@ -184,7 +187,7 @@ def sort_path_by_energyConsumption(G, source, target):
 
 
 def sort_path_by_renewableEnergyUsage(G, source, target):
-	list,list_values, temp_result = [p for p in all_shortest_paths(G, source, target, "energyConsumption")],[], 0; 
+	list,list_values, temp_result = [p for p in all_simple_paths(G, source, target, "energyConsumption")],[], 0;
 	for i in range(len(list)):
 		for j in range(len(list[i])):
 			temp_result+=G.node[list[i][j]]['renewableEnergyUsage']
@@ -192,14 +195,16 @@ def sort_path_by_renewableEnergyUsage(G, source, target):
 		temp_result = 0;
 	list_values2,sortedList = copy.deepcopy(list_values),[]
 	list_values.sort();
+	print list
+	print list_values
 	for i in list_values:
 		sortedList+=[list[list_values2.index(i)]]
-
+		list_values2[list_values2.index(i)] = 'a'
 	return sortedList
 
 
 def sort_path_by_wattPerMb(G, source, target):
-	list,list_values, temp_result = [p for p in all_shortest_paths(G, source, target, "energyConsumption")],[], 0; 
+	list,list_values, temp_result = [p for p in all_simple_paths(G, source, target, "energyConsumption")],[], 0;
 	for i in range(len(list)):
 		for j in range(len(list[i])):
 			temp_result+=G.node[list[i][j]]['wattPerMb']
